@@ -37,7 +37,7 @@ task:
       - cd ~/UB
       - repo init -u https://github.com/Halium/android -b halium-7.1 --depth=1
       - cd ~/UB
-      - repo sync -c -j700
+      - repo sync -c -j750
       - echo "============================"
       - echo "Syncing Complete!"
       - echo "============================"
