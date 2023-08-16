@@ -17,8 +17,8 @@ task:
        - sudo apt update -y && sudo apt install git aria2 curl wget rsync zip unzip lzma cpio ccache clang -y
        - sudo apt install python3 -y
        - sudo ln -sf /usr/bin/python3 /usr/bin/python
-       - git config --global user.name "example"
-       - git config --global user.email "example@example.com"
+       - git config --global user.name "Hasajapathirana"
+       - git config --global user.email "hasajapathirana2011@gmail.com"
        - git clone https://github.com/akhilnarang/scripts.git ~/scripts
        - cd ~/scripts
        - sudo bash setup/android_build_env.sh
@@ -33,11 +33,11 @@ task:
       - echo "============================"
       - echo "Syncing The Sources...."
       - echo "============================"
-      - mkdir ~/OrangeFox_sync
-      - cd ~/OrangeFox_sync
-      - git clone https://gitlab.com/OrangeFox/sync.git
-      - cd ~/OrangeFox_sync/sync/
-      - ./orangefox_sync.sh --branch 12.1 --path ~/fox_12.1
+      - mkdir ~/UB
+      - cd ~/UB
+      - repo init -u https://github.com/Halium/android -b halium-7.1 --depth=1
+      - cd ~/UB
+      - repo sync -c -j700
       - echo "============================"
       - echo "Syncing Complete!"
       - echo "============================"
@@ -46,22 +46,20 @@ task:
       - echo "============================"
       - echo "Starting the Build..."
       - echo "============================"
-      - cd ~/fox_12.1
-      - git clone https://github.com/mrx7014/android_device_samsung_a23 device/samsung/a23
+      - cd ~/UB
+      - git clone https://github.com/pstglia/android_device_samsung_core33g.git device/samsung/core33g
       - source build/envsetup.sh
       - export ALLOW_MISSING_DEPENDENCIES=true
-      - export FOX_BUILD_DEVICE=<device>
-      - export LC_ALL="C"
-      - lunch omni_a23-eng && mka recoveryimage
+      - brunch core33g
   Upload_script:
       - echo "============================"
       - echo "Uploading the Build..."
       - echo "============================"
-      - cd out/target/product/"$DEVICE"
+      - cd out/target/product/core33g
       - ls -lh
       - pwd
       - chmod 777 *
-      - curl --upload-file $(echo $OUTPUT) https://transfer.sh | tee link.txt && echo " "
+      - curl --upload-file *zip* https://transfer.sh | tee link.txt && echo " "
       - echo " "
       - echo "============================"
       - echo "Build Uploaded!"
